@@ -36,7 +36,7 @@ server = http.createServer(app);
 io = require("socket.io").listen(server);
 
 server.listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
+  // console.log("Express server listening on port " + app.get('port'));
 });
 
 
@@ -44,7 +44,7 @@ var connection_count = 0;
 io.sockets.on('connection', function (socket) {
   // Manage connection join/count
   connection_count++;
-  console.log('CONNECT. Connection count: ', connection_count);
+  // console.log('CONNECT. Connection count: ', connection_count);
 
   io.sockets.clients().forEach(function(s){
     s.get('mousedata', function(err, data) {
@@ -65,7 +65,7 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('disconnect', function() {
     connection_count--;
-    console.log('DISCONNECT. Connection count: ', connection_count);
+    // console.log('DISCONNECT. Connection count: ', connection_count);
 
     part = {
       "client_id" : socket.id,

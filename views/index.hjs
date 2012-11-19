@@ -48,14 +48,14 @@
     $(document).ready(function() {
       $('html').mousemove(function(e) {
         socket.emit('mousemove', { x: e.pageX, y: e.pageY });
-        console.log('Sending mouse data..');
+        // console.log('Sending mouse data..');
       })
     });
 
     ////////////////////
     // Receive mouse data
     socket.on('mousemove', function (data) {
-      console.log('Receiving mouse data');
+      // console.log('Receiving mouse data');
       nodes[data.client_id] = data;
       redraw();
     });
