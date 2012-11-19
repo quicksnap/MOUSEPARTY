@@ -33,16 +33,44 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 
 server = http.createServer(app);
-
 io = require("socket.io").listen(server);
 
 server.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
+
+var connection_count = 0;
 io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
+  // Manage connection join/count
+  connection_count++;
+  console.log('CONNECT. Connection count: ', connection_count);
+
+  io.sockets.clients().forEach(function(s){
+    s.get('mousedata', function(err, data) {
+      // Bootstrap data with faux move events
+      if(data) {
+        socket.emit('mousemove', data);
+      }
+    });
+  });
+
+
+  // Get mouse data, emit to all with ID (including owner)
+  socket.on('mousemove', function (data) {
+    data.client_id = socket.id;
+    socket.set('mousedata', data);
+    io.sockets.emit('mousemove', data);
+  });
+
+  socket.on('disconnect', function() {
+    connection_count--;
+    console.log('DISCONNECT. Connection count: ', connection_count);
+
+    part = {
+      "client_id" : socket.id,
+      "connection_count" : connection_count
+    };
+    socket.broadcast.emit('part', part);
   });
 });

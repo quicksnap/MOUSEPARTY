@@ -5,15 +5,66 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>{{ title }}</h1>
-    <p>Welcome to {{ title }}</p>
+    <div id="big-words">{{ title }}</div>
   </body>
+
   <script src="/socket.io/socket.io.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" charset="utf-8"></script>
+  <script src="http://underscorejs.org/underscore-min.js"></script>
+  <script src="http://d3js.org/d3.v2.js"></script>
   <script>
+    /////////////////
+    // D3 stuff
+    var svg = d3.select("body").append("svg")
+              .attr("class", "canvas");
     var socket = io.connect('http://localhost');
-    socket.on('news', function (data) {
-      console.log(data);
-      socket.emit('my other event', { my: 'data' });
+    var nodes = {}; // All connected sockets
+
+    function redraw() {
+      var data = _.map(nodes, function(v,k){
+        return v;
+      });
+      // console.log('Redraw this: ', data);
+
+      mouse = svg.selectAll('circle')
+        .data(data, function(data) { return data.client_id } );
+
+      mouse.enter()
+        .append('circle')
+        .attr('cx', function(d) { return d.x })
+        .attr('cy', function(d) { return d.y })
+        .attr('r', 2)
+        .attr('style', 'fill:black;');
+
+      mouse.attr()
+        .attr('cx', function(d) { return d.x })
+        .attr('cy', function(d) { return d.y });
+
+      mouse.exit().remove();
+    }
+
+    //////////////////
+    // Send mouse data on mousemove
+    $(document).ready(function() {
+      $('html').mousemove(function(e) {
+        socket.emit('mousemove', { x: e.pageX, y: e.pageY });
+        console.log('Sending mouse data..');
+      })
     });
+
+    ////////////////////
+    // Receive mouse data
+    socket.on('mousemove', function (data) {
+      console.log('Receiving mouse data');
+      nodes[data.client_id] = data;
+      redraw();
+    });
+
+    socket.on('part', function(data){
+      delete(nodes[data.client_id]);
+      redraw();
+    });
+
+
   </script>
 </html>

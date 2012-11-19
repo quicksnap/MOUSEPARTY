@@ -1,8 +1,22 @@
+body, html {
+  padding: 0; margin: 0;
+  height: 100%;
+  cursor: none;
+  position: relative;
+}
 body {
-  padding: 50px;
+  margin: 1px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+#big-words {
+  font-size: 70px;
+  position: absolute;
+  text-align: center;
+  width: 90%;
+  top: 2em;
 }
