@@ -1,6 +1,6 @@
 {
   "name": "mouseparty",
-  "version": "0.0.1",
+  "version": "0.0.1-1",
   "private": false,
   "scripts": {
     "start": "node ./app.js"
@@ -10,7 +10,7 @@
     "hjs": "*",
     "socket.io": "*"
   },
-  "subdomain": "quicksnap.mouseparty",
+  "subdomain": "mouse-party",
   "engines": {
     "node": "0.8.x"
   }
