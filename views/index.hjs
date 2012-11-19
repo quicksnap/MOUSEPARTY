@@ -17,7 +17,7 @@
     // D3 stuff
     var svg = d3.select("body").append("svg")
               .attr("class", "canvas");
-    var socket = io.connect('http://localhost');
+    var socket = io.connect('http://' + window.location.hostname);
     var nodes = {}; // All connected sockets
 
     function redraw() {
