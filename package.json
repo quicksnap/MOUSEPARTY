@@ -1,13 +1,17 @@
 {
-  "name": "application-name",
+  "name": "mouseparty",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "scripts": {
     "start": "node app"
   },
   "dependencies": {
     "express": "3.0.3",
-    "hjs": "*", 
+    "hjs": "*",
     "socket.io": "*"
+  },
+  "subdomain": "quicksnap.mouseparty",
+  "engines": {
+    "node": "0.8.x"
   }
 }
