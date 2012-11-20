@@ -3,6 +3,8 @@ body, html {
   height: 100%;
   cursor: none;
   position: relative;
+  background-color: #fff;
+
 }
 body {
   margin: 1px;
@@ -19,4 +21,9 @@ a {
   text-align: center;
   width: 90%;
   top: 2em;
+}
+svg {
+  height: 100%;
+  width: 100%;
+
 }

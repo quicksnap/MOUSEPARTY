@@ -15,7 +15,7 @@
   <script>
     /////////////////
     // D3 stuff
-    var svg = d3.select("body").append("svg")
+    var container = d3.select("body").append("svg")
               .attr("class", "canvas");
     var socket = io.connect('http://' + window.location.hostname);
     var nodes = {}; // All connected sockets
@@ -24,21 +24,22 @@
       var data = _.map(nodes, function(v,k){
         return v;
       });
-      // console.log('Redraw this: ', data);
+      console.log('Redraw this: ', data);
 
-      mouse = svg.selectAll('circle')
+      mouse = container.selectAll('image')
         .data(data, function(data) { return data.client_id } );
 
       mouse.enter()
-        .append('circle')
-        .attr('cx', function(d) { return d.x })
-        .attr('cy', function(d) { return d.y })
-        .attr('r', 2)
-        .attr('style', 'fill:black;');
+        .append('image')
+        .attr('xlink:href', '/images/pointer.jpg')
+        .attr('x', function(d) {return d.x})
+        .attr('y', function(d) {return d.y})
+        .attr('width', '20px')
+        .attr('height', '20px');
 
-      mouse.attr()
-        .attr('cx', function(d) { return d.x })
-        .attr('cy', function(d) { return d.y });
+      mouse
+        .attr('x', function(d) {return d.x})
+        .attr('y', function(d) {return d.y});
 
       mouse.exit().remove();
     }
