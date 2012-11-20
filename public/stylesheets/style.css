@@ -9,6 +9,17 @@ body, html {
 body {
   margin: 1px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #fff;
+  color: #000;
+  transition: background-color 200ms, color 200ms;
+  -moz-transition: background-color 200ms, color 200ms; 
+  -webkit-transition: background-color 200ms, color 200ms; 
+  -o-transition: background-color 200ms, color 200ms; 
+}
+
+body.empty {
+  background-color: black;
+  color: #fff;
 }
 
 a {
@@ -26,4 +37,8 @@ svg {
   height: 100%;
   width: 100%;
 
+}
+
+text {
+  font: bold 70px monospace;
 }

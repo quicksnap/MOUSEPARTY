@@ -5,7 +5,6 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <div id="big-words">{{ title }}</div>
   </body>
 
   <script src="/socket.io/socket.io.js"></script>
@@ -17,21 +16,48 @@
     // D3 stuff
     var container = d3.select("body").append("svg")
               .attr("class", "canvas");
+    
+    var text_data = "MOUSEPARTY".split("");
+    // M O U S E P A R T Y 
+    // 0 1 2 3 4 5 6 7 8 9
+    //
+    // U A R S O E M P T Y
+    // 2 6 7 3 1 4 0 5 8 9 
+    
     var socket = io.connect('http://' + window.location.hostname);
     var nodes = {}; // All connected sockets
+    var empty_room = false;
 
+    function draw_empty () {
+      $('body').addClass('empty');
+    }
+    function draw_notEmpty () {
+      $('body').removeClass('empty');
+    }
     function redraw() {
+      node_count = 0; 
       var data = _.map(nodes, function(v,k){
+        node_count = node_count + 1;
         return v;
       });
-      console.log('Redraw this: ', data);
+      // console.log('Redraw this: ', data);
+
+      if(empty_room === false && node_count <= 1) {
+        empty_room = true;
+        draw_empty();
+      } else {
+        if(empty_room === true && node_count > 1) {
+          empty_room = false;
+          draw_notEmpty();
+        }
+      }
 
       mouse = container.selectAll('image')
         .data(data, function(data) { return data.client_id } );
 
       mouse.enter()
         .append('image')
-        .attr('xlink:href', '/images/pointer.jpg')
+        .attr('xlink:href', '/images/pointer.png')
         .attr('x', function(d) {return d.x})
         .attr('y', function(d) {return d.y})
         .attr('width', '20px')
