@@ -11,6 +11,10 @@
     "socket.io": "*"
   },
   "subdomain": "mouse-party",
+  "domains" : [
+    "mouseparty.net",
+    "www.mouseparty.net"
+  ],
   "engines": {
     "node": "0.8.x"
   }
